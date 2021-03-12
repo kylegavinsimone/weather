@@ -32,56 +32,58 @@ function getWeather(city) {
           buildDashboard(onecallData);
         });
     });
-    function buildDashboard(data) {
-        var currentDate = new Date(data.current.dt * 1000);
-        console.log(currentDate);
-        var day = currentDate.getDate();
-        var month = currentDate.getMonth() + 1;
-        var year = currentDate.getFullYear();
-        var currentTemperature = document.querySelector("#temp");
-  var currentHumidity = document.querySelector("#humidity");
-  var currentUvi = document.querySelector("#uvi");
-  var searchBtn = document.querySelector("#searchBtn");
-  var clearHistoryBtn = document.querySelector("#clearHistoryBtn");
-  currentCity.innerHTML += " (" + month + "/" + day + "/" + year + ") ";
-  currentTemperature.innerHTML =
-  "Temperature: " + getFahrenheit(data.current.temp) + " F";
-  currentHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
-  currentUvi.innerHTML = "UV Index: " + data.current.uvi;
-  var cityForecast=document.querySelector("#forecast");
-  for(i=0; i< 5; i++){
-      var forecastIndex = data.daily[i];  
+  function buildDashboard(data) {
+    var currentDate = new Date(data.current.dt * 1000);
+    console.log(currentDate);
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth() + 1;
+    var year = currentDate.getFullYear();
+    var currentTemperature = document.querySelector("#temp");
+    var currentHumidity = document.querySelector("#humidity");
+    var currentUvi = document.querySelector("#uvi");
+    var searchBtn = document.querySelector("#searchBtn");
+    var clearHistoryBtn = document.querySelector("#clearHistoryBtn");
+    currentCity.innerHTML += " (" + month + "/" + day + "/" + year + ") ";
+    currentTemperature.innerHTML =
+      "Temperature: " + getFahrenheit(data.current.temp) + " F";
+    currentHumidity.innerHTML = "Humidity: " + data.current.humidity + " %";
+    currentUvi.innerHTML = "UV Index: " + data.current.uvi;
+    var cityForecast = document.querySelector("#forecast");
+    for (i = 0; i < 5; i++) {
+      var forecastIndex = data.daily[i];
       console.log(forecastIndex);
-      cityForecast.append(buildForecast(forecastIndex))
+      cityForecast.append(buildForecast(forecastIndex));
     }
-    function buildForecast(forecast){
-        var col =document.createElement("div");
-        col.classList.add("col");
-        var forecastContainer =document.createElement("div");
-        forecastContainer.classList.add("big-primary", "rounded", "p-5");
-        // var img = document.createElement("img");
-        // img.setAttribute("src", forecast.url);
-        var forecastDate = new Date(data.daily[i].dt*1000);
-        console.log(forecastDate);
-        var forecastDay = forecastDate.getDate();
-        var forecastMonth = forecastDate.getMonth() + 1;
-        var forecastYear = forecastDate.getFullYear();
-        var forecastDate=document.createElement("h4");
-        forecastDate.textContent= forecast.forecastDate;
-        // forecast.setAttribute();
-        forecastDate.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
-        var forecastTemp = document.createElement("p");
-        //   temp.textContent= forecast.temp;
-        forecastTemp.innerHTML = "Temp: " + getFahrenheit(data.daily[i].temp.day)  + " F";
-        console.log(data.daily[i].temp);
-        console.log(getFahrenheit(data.daily[i].temp));
-        var forecastHumidity = document.createElement("p");
-        forecastHumidity.innerHTML = "Humidity: " + (data.daily[i].humidity) + "%";
-        forecastContainer.append(forecastDate, forecastTemp, forecastHumidity);
-        col.append(forecastContainer);
-        return col;
+    function buildForecast(forecast) {
+      var col = document.createElement("div");
+      col.classList.add("col");
+      var forecastContainer = document.createElement("div");
+      forecastContainer.classList.add("big-primary", "rounded", "p-5");
+      // var img = document.createElement("img");
+      // img.setAttribute("src", forecast.url);
+      var forecastDate = new Date(data.daily[i].dt * 1000);
+      console.log(forecastDate);
+      var forecastDay = forecastDate.getDate();
+      var forecastMonth = forecastDate.getMonth() + 1;
+      var forecastYear = forecastDate.getFullYear();
+      var forecastDate = document.createElement("h4");
+      forecastDate.textContent = forecast.forecastDate;
+      // forecast.setAttribute();
+      forecastDate.innerHTML =
+        forecastMonth + "/" + forecastDay + "/" + forecastYear;
+      var forecastTemp = document.createElement("p");
+      //   temp.textContent= forecast.temp;
+      forecastTemp.innerHTML =
+        "Temp: " + getFahrenheit(data.daily[i].temp.day) + " F";
+      console.log(data.daily[i].temp);
+      console.log(getFahrenheit(data.daily[i].temp));
+      var forecastHumidity = document.createElement("p");
+      forecastHumidity.innerHTML = "Humidity: " + data.daily[i].humidity + "%";
+      forecastContainer.append(forecastDate, forecastTemp, forecastHumidity);
+      col.append(forecastContainer);
+      return col;
     }
-    }             
+  }
 }
 // }
 searchBtn.addEventListener("click", function (e) {
@@ -90,7 +92,7 @@ searchBtn.addEventListener("click", function (e) {
   weatherHistory.push(searchCity);
   localStorage.setItem("search", JSON.stringify(weatherHistory));
 });
-clearHistoryBtn.addEventListener("click", function(){
-    weatherHistory=[];
-}) 
+clearHistoryBtn.addEventListener("click", function () {
+  weatherHistory = [];
+});
 // getWeather("");
